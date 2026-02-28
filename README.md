@@ -151,34 +151,34 @@ Step 2:
 }
 ```
 
-### Local Setup
+# Local Setup
 
-# Clone repository:
+### Clone repository:
   git clone <your-repo-url>
   cd bitespeed-backend
 
-# Install dependencies:
+### Install dependencies:
   npm install
   
-# Create .env file:
-  DATABSE_URL = postgresql://postgres:imOfQEEjuqAMxUtqySbbiPqDRPtFMhjz@postgres.railway.internal:5432/railway
+### Create .env file:
+  DATABSE_URL = "postgresql://postgres:imOfQEEjuqAMxUtqySbbiPqDRPtFMhjz@postgres.railway.internal:5432/railway"
 
-# Generate Prisma client:
+### Generate Prisma client:
   npx prisma generate
   
-# Push schema:
+### Push schema:
   npx prisma db push
 
-# npx prisma db push
+### npx prisma db push
   npm run dev
 
-# Production:
+### Production:
   npm run build
   npm start
 
-### Deployment
- # Hosted on Railway.
- # Start command used:
+# Deployment
+ ### Hosted on Railway.
+ ### Start command used:
    npm run build && npm start
 
 ### Features Implemented:
@@ -199,8 +199,8 @@ Step 2:
 
 - Error handling
 
-### Author
- # Yamini Cherukuri
+# Author
+ ### Yamini Cherukuri
 
 
 
