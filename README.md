@@ -18,7 +18,7 @@ It identifies and links customer contacts based on shared email and/or phone num
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - Node.js  
 - Express.js  
@@ -47,7 +47,7 @@ They must be linked together.
 
 ---
 
-## 📥 API Usage
+##  API Usage
 
 ### Endpoint
 
@@ -154,32 +154,32 @@ Step 2:
 # Local Setup
 
 ### Clone repository:
-  git clone <your-repo-url>
-  cd bitespeed-backend
+ - git clone <your-repo-url>
+ - cd bitespeed-backend
 
 ### Install dependencies:
-  npm install
+  - npm install
   
 ### Create .env file:
-  DATABSE_URL = "postgresql://postgres:imOfQEEjuqAMxUtqySbbiPqDRPtFMhjz@postgres.railway.internal:5432/railway"
+  - DATABSE_URL = "postgresql://postgres:imOfQEEjuqAMxUtqySbbiPqDRPtFMhjz@postgres.railway.internal:5432/railway"
 
 ### Generate Prisma client:
-  npx prisma generate
+ - npx prisma generate
   
 ### Push schema:
-  npx prisma db push
+ - npx prisma db push
 
 ### npx prisma db push
-  npm run dev
+ - npm run dev
 
 ### Production:
-  npm run build
-  npm start
+ - npm run build
+ - npm start
 
 # Deployment
  ### Hosted on Railway.
  ### Start command used:
-   npm run build && npm start
+ - npm run build && npm start
 
 ### Features Implemented:
 
