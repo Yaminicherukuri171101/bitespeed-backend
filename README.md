@@ -169,7 +169,7 @@ Step 2:
 ### Push schema:
  - npx prisma db push
 
-### npx prisma db push
+### Deployment:
  - npm run dev
 
 ### Production:
