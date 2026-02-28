@@ -92,8 +92,8 @@ app.post("/identify", async (req, res) => {
       }
     }
 
-    // Step 7: Refresh cluster after possible updates
-    const finalCluster = await prisma.contact.findMany({
+    // Step 7: Refresh cluster
+    let finalCluster = await prisma.contact.findMany({
       where: {
         OR: [
           { id: primaryId },
@@ -111,7 +111,7 @@ app.post("/identify", async (req, res) => {
       finalCluster.map(c => c.phoneNumber).filter(Boolean)
     )
 
-    // Step 8: Create secondary if new information
+    // Step 8: Create secondary if new info
     if (
       (email && !existingEmails.has(email)) ||
       (phoneNumber && !existingPhones.has(phoneNumber))
@@ -124,39 +124,38 @@ app.post("/identify", async (req, res) => {
           linkedId: primaryId
         }
       })
+
+      // refresh again after insert
+      finalCluster = await prisma.contact.findMany({
+        where: {
+          OR: [
+            { id: primaryId },
+            { linkedId: primaryId }
+          ]
+        },
+        orderBy: { createdAt: "asc" }
+      })
     }
 
-    // Step 9: Final refresh
-    const finalContacts = await prisma.contact.findMany({
-      where: {
-        OR: [
-          { id: primaryId },
-          { linkedId: primaryId }
-        ]
-      },
-      orderBy: { createdAt: "asc" }
-    })
-
-    const finalPrimary = finalContacts.find(
+    const finalPrimary = finalCluster.find(
       c => c.linkPrecedence === "primary"
     )!
+
+    // ✅ Remove duplicates using Set
+    const emails = Array.from(
+      new Set(finalCluster.map(c => c.email).filter(Boolean))
+    )
+
+    const phoneNumbers = Array.from(
+      new Set(finalCluster.map(c => c.phoneNumber).filter(Boolean))
+    )
 
     return res.json({
       contact: {
         primaryContactId: finalPrimary.id,
-        emails: [
-          finalPrimary.email,
-          ...finalContacts
-            .filter(c => c.id !== finalPrimary.id && c.email)
-            .map(c => c.email!)
-        ].filter(Boolean),
-        phoneNumbers: [
-          finalPrimary.phoneNumber,
-          ...finalContacts
-            .filter(c => c.id !== finalPrimary.id && c.phoneNumber)
-            .map(c => c.phoneNumber!)
-        ].filter(Boolean),
-        secondaryContactIds: finalContacts
+        emails,
+        phoneNumbers,
+        secondaryContactIds: finalCluster
           .filter(c => c.linkPrecedence === "secondary")
           .map(c => c.id)
       }
